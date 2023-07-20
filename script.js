@@ -1,13 +1,25 @@
 const RANDOM_QUOTE_API_URL = "http://api.quotable.io/random";
+const quoteDisplayElement = document.getElementById("quoteDisplay");
+const quoteInputElement = document.getElementById("quoteInput");
 
 function getRandomQuote() {
   return fetch(RANDOM_QUOTE_API_URL)
     .then((response) => response.json())
-    .then((data) => content);
+    .then((data) => data.content);
 }
 
 async function getNextQuote() {
   const quote = await getRandomQuote();
+
+  quoteDisplayElement.innerHTML = "";
+  quote.split("").forEach((character) => {
+    const characterSpan = document.createElement("span");
+    characterSpan.classList.add("correct");
+    characterSpan.innerText = character;
+    quoteDisplayElement.appendChild(characterSpan);
+  });
+
+  quoteInputElement.value = null;
   console.log(quote);
 }
 
